@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="abc" method="get">
+Username:<input type="text" name="uname"><br>
+possword:<input type="text" name="poss"><br>
+<input type="submit" value="login"><br>
+</form>
+</body>
+</html>
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TaskServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out=response.getWriter();
+		String a="Akash";
+		String b="12345";
+		String user=request.getParameter("uname");
+		String poss=request.getParameter("poss");
+		if((a.equals(user)&&b.equals(poss))) {
+			out.println("username="+user);
+			out.println("possword="+poss);
+			out.println("LOGIN SUCCESSFULLY");
+		}
+		else {
+			RequestDispatcher rd=request.getRequestDispatcher("/afg");
+			rd.forward(request, response);	
+		}
+		}
+}
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TaskServlet2 extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out=response.getWriter();
+		out.println("LOGIN FAILED");
+		RequestDispatcher rd=request.getRequestDispatcher("/task.html");
+		rd.include(request, response);	
+	}
+}
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <servlet-mapping>
+  <servlet-name>avs</servlet-name>
+  <url-pattern>/abc</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  <servlet-name>avs</servlet-name>
+  <servlet-class>TaskServlet</servlet-class>
+  </servlet>
+   <servlet-mapping>
+  <servlet-name>asv</servlet-name>
+  <url-pattern>/afg</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  <servlet-name>asv</servlet-name>
+  <servlet-class>TaskServlet2</servlet-class>
+  </servlet>
+</web-app>
+
